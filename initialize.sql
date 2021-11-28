@@ -14,7 +14,7 @@ SELECT MIN(testDemo.users.first_name) FROM testDemo.users;
 
 SELECT MIN(LENGTH(testDemo.users.first_name)) FROM testDemo.users ORDER BY testDemo.users.first_name;
 
-SELECT * FROM testDemo.usersContact; 
+SELECT * FROM testDemo.usersAddress; 
 
 // Question 2 this one below worked
 2. Find the most popular area code in the `usersContact` table. 
@@ -27,11 +27,16 @@ SELECT substring(testDemo.usersContact.phone1,1, 3) AS newData, COUNT(newData) a
 3. Find the MIN first_name, the county, and a count of all users in that county for counties with more 
 than 10 users. There will be four results. List last one.   * Hint: MIN, COUNT, JOIN, GROUP BY, HAVING
 
-SELECT MIN(testDemo.users.first_name), testDemo.usersAddress.county
+SELECT MIN(testDemo.users.first_name), testDemo.usersAddress.county,
+COUNT(testDemo.usersAddress.county) as countUsers
 FROM testDemo.users
-INNER JOIN testDemo.usersAddress,
-GROUP BY (testDemo.users.first_name, testDemo.usersAddress.county)
-HAVING COUNT(testDemo.usersAddress.county) > 10;
+INNER JOIN testDemo.usersAddress
+ON testDemo.users.id = testDemo.usersAddress.id
+GROUP BY testDemo.usersAddress.county
+HAVING countUsers > 20;
+
+SELECT MIN(testDemo.users.first_name), testDemo.usersAddress.county, COUNT(*) AS userCount FROM testDemo.usersAddress JOIN testDemo.users ON testDemo.usersAddress.id=testDemo.users.id 
+GROUP BY testDemo.usersAddress.county HAVING userCount > 20;
 
 select
 min(first_name),
