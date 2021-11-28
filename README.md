@@ -39,19 +39,28 @@ We are going to run a couple SQL queries and put the answers in the "Query Respo
 ## Query Responses
 
 1. Sums
-  * AK:
-  * CT
-  * TX:
-  * WY:
+  * AK: 1,422
+  * CT: 999 
+  * TX: 7,908
+  * WY: 1,271
+SELECT state, SUM(DISTINCT testDemo.usersAddress.user_id) FROM testDemo.usersAddress GROUP BY state;
 
 2.
-  * Area code:
+  * Area code:973
+SELECT substring(testDemo.usersContact.phone1,1, 3) AS newData, COUNT(newData) as magnitude FROM testDemo.usersContact GROUP BY newData ORDER BY magnitude DESC LIMIT 1;
 
 3.
-  * first_name:
-  * county:
-  * county total:
-
+  * first_name: Avery
+  * county: Orange
+  * county total: 22
+  
+SELECT MIN(testDemo.users.first_name), testDemo.usersAddress.county,
+COUNT(testDemo.usersAddress.county) as countUsers
+FROM testDemo.users
+INNER JOIN testDemo.usersAddress
+ON testDemo.users.id = testDemo.usersAddress.id
+GROUP BY testDemo.usersAddress.county
+HAVING countUsers > 20;
 
 ## Summary
 

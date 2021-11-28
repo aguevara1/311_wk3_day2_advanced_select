@@ -1,13 +1,62 @@
-DROP TABLE IF EXISTS usersContact, usersAddress, users;
 
-CREATE TABLE users (
+SELECT SUM(user_id) FROM testDemo.usersAddress WHERE state LIKE "WY";
+SELECT * FROM testDemo.usersAddress WHERE state LIKE "AK";
+
+// Question 1
+1. Get a sum of all the user_ids from the `usersAddress` table grouped by state. Enter the values for 
+the specific states below.
+SELECT state, SUM(DISTINCT testDemo.usersAddress.user_id) FROM testDemo.usersAddress GROUP BY state;
+
+
+SELECT MIN(testDemo.users.first_name),MIN(testDemo.usersAddress.county) FROM testDemo.users INNER JOIN testDemo.usersAddress ON testDemo.users.id=testDemo.usersAddress.id GROUP BY testDemo.users.first_name, testDemo.usersAddress.county HAVING ;
+
+SELECT MIN(testDemo.users.first_name) FROM testDemo.users;
+
+SELECT MIN(LENGTH(testDemo.users.first_name)) FROM testDemo.users ORDER BY testDemo.users.first_name;
+
+SELECT * FROM testDemo.usersContact; 
+
+// Question 2 this one below worked
+2. Find the most popular area code in the `usersContact` table. 
+SELECT substring(testDemo.usersContact.phone1,1, 3) AS onlyAreaCode FROM testDemo.usersContact GROUP BY onlyAreaCode ORDER BY COUNT(onlyAreaCode) DESC LIMIT 1;
+
+
+SELECT substring(testDemo.usersContact.phone1,1, 3) AS newData, COUNT(newData) as magnitude FROM testDemo.usersContact GROUP BY newData ORDER BY magnitude DESC LIMIT 1;
+
+//Question 3 on assignment Week 3 day 2
+3. Find the MIN first_name, the county, and a count of all users in that county for counties with more 
+than 10 users. There will be four results. List last one.   * Hint: MIN, COUNT, JOIN, GROUP BY, HAVING
+
+SELECT MIN(testDemo.users.first_name), testDemo.usersAddress.county
+FROM testDemo.users
+INNER JOIN testDemo.usersAddress,
+GROUP BY (testDemo.users.first_name, testDemo.usersAddress.county)
+HAVING COUNT(testDemo.usersAddress.county) > 10;
+
+select
+min(first_name),
+county,
+count(county) as countUsers
+from
+testDemo.users
+inner join testDemo.usersaddress on testDemo.usersaddress.user_id = testDemo.users.id
+group by county having countUsers > 10;
+
+
+
+
+SELECT COUNT(CustomerID) GROUP BY Country;
+
+SELECT phone1 FROM testDemo.usersContact;
+
+CREATE TABLE testDemo.users 
   id INT NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(50),
   last_name VARCHAR(50),
   PRIMARY KEY (id)
 );
 
-CREATE TABLE usersContact (
+CREATE TABLE testDemo.usersContact (
   id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   phone1 VARCHAR(50),
@@ -18,7 +67,7 @@ CREATE TABLE usersContact (
   REFERENCES users (id)
 );
 
-CREATE TABLE usersAddress (
+CREATE TABLE testDemo.usersAddress (
   id INT NOT NULL AUTO_INCREMENT,
   user_id INT NOT NULL,
   address VARCHAR(100),
@@ -31,7 +80,7 @@ CREATE TABLE usersAddress (
   REFERENCES users (id)
 );
 
-INSERT INTO users
+first_namelast_nameINSERT INTO testDemo.users
 	(first_name, last_name)
 VALUES 
   ("James","Butt"),
@@ -535,7 +584,7 @@ VALUES
   ("Jani","Biddy"),
   ("Chauncey","Motley");
 
-INSERT INTO usersContact
+INSERT INTO testDemo.usersContact
 	(user_id, phone1, phone2, email)
 VALUES 
   (92,"626-572-1096","626-696-2777","cory.gibes@gmail.com"),
@@ -1040,7 +1089,7 @@ VALUES
   (433,"760-291-5497","760-261-4786","clorinda.heimann@hotmail.com");
 
 
-INSERT INTO usersAddress
+INSERT INTO testDemo.usersAddress
 	(user_id, address, city, county, state, zip)
 VALUES 
   (92,"6649 N Blue Gum St","New Orleans","Orleans","LA",70116),
