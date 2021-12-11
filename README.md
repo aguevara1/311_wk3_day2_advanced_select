@@ -64,4 +64,5 @@ HAVING countUsers > 20;
 
 ## Summary
 
+
 We're starting to get pretty advanced with our SQL queries. Keep researching other advanced SELECT statements and get ready to foray into [INSERTs and UPDATEs and DELETEs, oh CRUD](https://www.youtube.com/watch?v=-HrfbV16-FQ)!.
