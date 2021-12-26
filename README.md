@@ -49,6 +49,7 @@ SELECT state, SUM(DISTINCT testDemo.usersAddress.user_id) FROM testDemo.usersAdd
   * Area code:973
 SELECT substring(testDemo.usersContact.phone1,1, 3) AS newData, COUNT(newData) as magnitude FROM testDemo.usersContact GROUP BY newData ORDER BY magnitude DESC LIMIT 1;
 
+
 3.
   * first_name: Avery
   * county: Orange
